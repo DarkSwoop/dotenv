@@ -8,7 +8,6 @@ end
 module Dotenv
   class Railtie < Rails::Railtie
     config.before_configuration { load }
-    config.before_initialize { configure_spring }
 
     # Public: Load dotenv
     #
@@ -16,9 +15,7 @@ module Dotenv
     # can manually call `Dotenv::Railtie.load` if you needed it sooner.
     def load
       Dotenv.load *env_files
-    end
-
-    def configure_spring
+      Spring.application_root = Rails.root
       Spring.watch *env_files if defined?(Spring)
     end
 
