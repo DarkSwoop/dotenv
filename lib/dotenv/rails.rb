@@ -15,8 +15,10 @@ module Dotenv
     # can manually call `Dotenv::Railtie.load` if you needed it sooner.
     def load
       Dotenv.load *env_files
-      Spring.application_root = Rails.root
-      Spring.watch *env_files if defined?(Spring)
+      if defined?(Spring)
+        Spring.application_root = Rails.root
+        Spring.watch *env_files
+      end
     end
 
     # Rails uses `#method_missing` to delegate all class methods to the
