@@ -14,8 +14,10 @@ module Dotenv
     # This will get called during the `before_configuration` callback, but you
     # can manually call `Dotenv::Railtie.load` if you needed it sooner.
     def load
-      Dotenv.load Rails.root.join('.env')
-      Spring.watch Rails.root.join('.env') if defined?(Spring)
+      base_path = Rails.root
+      env_files = [base_path.join('.env'), base_path.join(".env.#{Rails.env}")]
+      Dotenv.load *env_files
+      Spring.watch *env_files if defined?(Spring)
     end
 
     # Rails uses `#method_missing` to delegate all class methods to the
