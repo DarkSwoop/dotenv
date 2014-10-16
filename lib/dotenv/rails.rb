@@ -8,7 +8,7 @@ end
 module Dotenv
   class Railtie < Rails::Railtie
     config.before_configuration { load }
-    config.after_initialize { configure_spring }
+    config.before_initialize { configure_spring }
 
     # Public: Load dotenv
     #
